@@ -1,3 +1,7 @@
-export default function CommonLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+export default function CommonLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return <>{children}</>;
 }
