@@ -12,13 +12,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatDistanceToNow } from "date-fns";
-import { Bell, Calendar, CheckCircle, Clock, UserPlus } from "lucide-react";
+import { Bell, BookOpen, CheckCircle, MessageSquare, UserPlus } from "lucide-react";
 
 interface Notification {
   id: string;
   title: string;
   message: string;
-  type: "appointment" | "schedule" | "system" | "user";
+  type: "enrollment" | "review" | "system" | "user";
   timestamp: Date;
   read: boolean;
 }
@@ -26,19 +26,19 @@ interface Notification {
 const MOCK_NOTIFICATIONS: Notification[] = [
   {
     id: "1",
-    title: "New Appointment Scheduled",
+    title: "New Enrollment",
     message:
-      "You have a new appointment scheduled with John Doe on 2024-06-15 at 10:00 AM.",
-    type: "appointment",
+      "A student has enrolled in your course 'Advanced React'.",
+    type: "enrollment",
     timestamp: new Date(Date.now() - 1000 * 60 * 30), // 30 minutes ago
     read: false,
   },
 
   {
     id: "2",
-    title: "Schedule Updated",
-    message: "Your schedule has been updated for the week of 2024-06-17.",
-    type: "schedule",
+    title: "New Review",
+    message: "Your course 'Python Basics' received a 5-star review.",
+    type: "review",
     timestamp: new Date(Date.now() - 1000 * 60 * 60), // 1 hour ago
     read: true,
   },
@@ -65,10 +65,10 @@ const MOCK_NOTIFICATIONS: Notification[] = [
 
 const getNotificationIcon = (type: Notification["type"]) => {
   switch (type) {
-    case "appointment":
-      return <Calendar className="h-4 w-4 text-blue-600" />;
-    case "schedule":
-      return <Clock className="h-4 w-4 text-amber-600" />;
+    case "enrollment":
+      return <BookOpen className="h-4 w-4 text-blue-600" />;
+    case "review":
+      return <MessageSquare className="h-4 w-4 text-amber-600" />;
     case "system":
       return <CheckCircle className="h-4 w-4 text-purple-600" />;
     case "user":

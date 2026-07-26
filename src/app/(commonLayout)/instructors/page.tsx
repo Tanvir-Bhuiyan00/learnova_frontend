@@ -1,4 +1,4 @@
-import InstructorsList from "@/components/modules/Consultation/InstructorsList";
+import InstructorsList from "@/components/modules/Instructors/InstructorsList";
 import { getInstructors } from "@/services/instructor.services";
 import {
   dehydrate,
