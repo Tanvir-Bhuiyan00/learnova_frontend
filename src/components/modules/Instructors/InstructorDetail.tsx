@@ -62,12 +62,19 @@ const InstructorDetail = ({ instructorId }: Props) => {
             {instructor.courses.map((course) => (
               <Link key={course.id} href={`/courses/${course.id}`}>
                 <Card className="transition-shadow hover:shadow-md">
-                  <CardContent className="p-4">
-                    <h3 className="mb-2 font-semibold line-clamp-2">{course.title}</h3>
-                    <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                      <span className="flex items-center gap-1"><Star className="size-3.5 fill-yellow-400 text-yellow-400" />{course.averageRating.toFixed(1)}</span>
-                      <span>${course.price.toFixed(2)}</span>
-                      <span className="text-xs uppercase">{course.status}</span>
+                  <CardContent className="p-0">
+                    {course.thumbnail && (
+                      <div className="h-32 overflow-hidden rounded-t-lg">
+                        <img src={course.thumbnail} alt={course.title} className="size-full object-cover" />
+                      </div>
+                    )}
+                    <div className="p-4">
+                      <h3 className="mb-2 font-semibold line-clamp-2">{course.title}</h3>
+                      <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                        <span className="flex items-center gap-1"><Star className="size-3.5 fill-yellow-400 text-yellow-400" />{course.averageRating.toFixed(1)}</span>
+                        <span>${course.price.toFixed(2)}</span>
+                        <span className="text-xs uppercase">{course.status}</span>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>

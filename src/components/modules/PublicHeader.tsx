@@ -1,8 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Menu, Search, X } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const navLinks = [
@@ -13,6 +15,16 @@ const navLinks = [
 
 const PublicHeader = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/courses?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery("");
+    }
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -32,6 +44,16 @@ const PublicHeader = () => {
             </Link>
           ))}
         </nav>
+
+        <form onSubmit={handleSearch} className="hidden md:flex relative">
+          <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            placeholder="Search courses..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-56 pl-9"
+          />
+        </form>
 
         <div className="hidden md:flex items-center gap-3">
           <Link href="/login">
@@ -55,6 +77,10 @@ const PublicHeader = () => {
       {mobileOpen && (
         <div className="border-t md:hidden">
           <div className="container mx-auto space-y-2 px-4 py-4">
+            <form onSubmit={handleSearch} className="relative pb-2">
+              <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+              <Input placeholder="Search courses..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full pl-9" />
+            </form>
             {navLinks.map((link) => (
               <Link
                 key={link.href}

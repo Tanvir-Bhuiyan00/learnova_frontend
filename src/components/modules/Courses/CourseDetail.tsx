@@ -59,6 +59,12 @@ const CourseDetail = ({ courseId }: CourseDetailProps) => {
         &larr; Back to courses
       </Link>
 
+      {course.thumbnail && (
+        <div className="mb-8 overflow-hidden rounded-lg">
+          <img src={course.thumbnail} alt={course.title} className="h-64 w-full object-cover" />
+        </div>
+      )}
+
       <div className="grid gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-6">
           <div>

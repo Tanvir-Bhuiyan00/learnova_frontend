@@ -53,8 +53,12 @@ const HomeHero = () => {
                   href={`/courses/${course.id}`}
                   className="group rounded-lg border p-6 shadow-sm transition-shadow hover:shadow-md"
                 >
-                  <div className="mb-3 flex h-36 items-center justify-center rounded-md bg-muted">
-                    <BookOpen className="size-12 text-muted-foreground" />
+                  <div className="mb-3 flex h-36 items-center justify-center overflow-hidden rounded-md bg-muted">
+                    {course.thumbnail ? (
+                      <img src={course.thumbnail} alt={course.title} className="size-full object-cover" />
+                    ) : (
+                      <BookOpen className="size-12 text-muted-foreground" />
+                    )}
                   </div>
                   <h3 className="mb-1 font-semibold group-hover:text-primary transition-colors line-clamp-2">
                     {course.title}

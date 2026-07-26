@@ -9,6 +9,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Textarea } from "@/components/ui/textarea";
 import { getCourseById, updateCourse } from "@/services/course.services";
 import { IUpdateCoursePayload } from "@/types/course.types";
+import { updateCourseZodSchema } from "@/zod/course.validation";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -20,6 +21,7 @@ const EditCoursePage = ({ params }: EditCoursePageProps) => {
   const router = useRouter();
   const [courseId, setCourseId] = useState<string>("");
   const [form, setForm] = useState<IUpdateCoursePayload>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => { params.then((p) => setCourseId(p.courseId)); }, [params]);
 
@@ -44,18 +46,37 @@ const EditCoursePage = ({ params }: EditCoursePageProps) => {
     },
   });
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrors({});
+    const result = updateCourseZodSchema.safeParse(form);
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      for (const issue of result.error.issues) {
+        const field = issue.path.join(".");
+        if (!fieldErrors[field]) fieldErrors[field] = issue.message;
+      }
+      setErrors(fieldErrors);
+      return;
+    }
+    mutation.mutate(result.data);
+  };
+
+  const fieldError = (field: string) => errors[field] && <p className="text-xs text-destructive mt-1">{errors[field]}</p>;
+
   if (isLoading) return <div className="p-6"><Skeleton className="h-8 w-48" /></div>;
 
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-6">
       <h1 className="text-2xl font-bold">Edit Course</h1>
-      <form onSubmit={(e) => { e.preventDefault(); mutation.mutate(form); }}>
+      <form onSubmit={handleSubmit}>
         <Card>
           <CardHeader><CardTitle>Course Details</CardTitle></CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label>Title</Label>
               <Input value={form.title || ""} onChange={(e) => setForm({ ...form, title: e.target.value })} />
+              {fieldError("title")}
             </div>
             <div className="space-y-2">
               <Label>Description</Label>
@@ -65,6 +86,7 @@ const EditCoursePage = ({ params }: EditCoursePageProps) => {
               <div className="space-y-2">
                 <Label>Price ($)</Label>
                 <Input type="number" min="0" step="0.01" value={form.price || 0} onChange={(e) => setForm({ ...form, price: parseFloat(e.target.value) || 0 })} />
+                {fieldError("price")}
               </div>
               <div className="space-y-2">
                 <Label>Status</Label>

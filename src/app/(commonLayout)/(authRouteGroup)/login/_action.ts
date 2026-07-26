@@ -43,7 +43,6 @@ export const loginAction = async (
     // }else // in the catch block
 
     if (needPasswordChange) {
-      //TODO : refactoring
       redirect(`/reset-password?email=${email}`);
     } else {
       // redirect(redirectPath || "/dashboard");

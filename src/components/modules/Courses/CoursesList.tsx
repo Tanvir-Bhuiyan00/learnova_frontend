@@ -17,7 +17,8 @@ import { ICourse } from "@/types/course.types";
 import { useQuery } from "@tanstack/react-query";
 import { BookOpen, Search, Star, User } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const levelLabels: Record<string, string> = {
   BEGINNER: "Beginner",
@@ -27,9 +28,15 @@ const levelLabels: Record<string, string> = {
 };
 
 const CoursesList = () => {
-  const [search, setSearch] = useState("");
+  const searchParams = useSearchParams();
+  const [search, setSearch] = useState(searchParams.get("q") || "");
   const [categoryId, setCategoryId] = useState("all");
   const [level, setLevel] = useState("all");
+
+  useEffect(() => {
+    const q = searchParams.get("q");
+    if (q) setSearch(q);
+  }, [searchParams]);
 
   const { data: coursesData, isLoading: coursesLoading } = useQuery({
     queryKey: ["courses"],
@@ -121,8 +128,12 @@ const CoursesList = () => {
           {filtered.map((course) => (
             <Link key={course.id} href={`/courses/${course.id}`}>
               <div className="group rounded-lg border p-6 shadow-sm transition-shadow hover:shadow-md">
-                <div className="mb-3 flex h-36 items-center justify-center rounded-md bg-muted">
-                  <BookOpen className="size-12 text-muted-foreground" />
+                <div className="mb-3 flex h-36 items-center justify-center overflow-hidden rounded-md bg-muted">
+                  {course.thumbnail ? (
+                    <img src={course.thumbnail} alt={course.title} className="size-full object-cover" />
+                  ) : (
+                    <BookOpen className="size-12 text-muted-foreground" />
+                  )}
                 </div>
                 <Badge variant="secondary" className="mb-2">
                   {levelLabels[course.level] || course.level}
