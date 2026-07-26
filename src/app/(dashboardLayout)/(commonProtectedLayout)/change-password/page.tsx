@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { toast } from "sonner";
+import { changePassword } from "@/services/auth.services";
 
 const ChangePasswordPage = () => {
   const [form, setForm] = useState({ currentPassword: "", newPassword: "", confirmPassword: "" });
@@ -15,10 +16,10 @@ const ChangePasswordPage = () => {
     e.preventDefault();
     if (form.newPassword !== form.confirmPassword) { toast.error("Passwords do not match"); return; }
     setLoading(true);
-    // TODO: call changePassword service when implemented
-    toast.success("Password changed successfully");
+    const res = await changePassword({ currentPassword: form.currentPassword, newPassword: form.newPassword });
+    if (res.success) { toast.success("Password changed successfully"); setForm({ currentPassword: "", newPassword: "", confirmPassword: "" }); }
+    else { toast.error(res.message || "Failed to change password"); }
     setLoading(false);
-    setForm({ currentPassword: "", newPassword: "", confirmPassword: "" });
   };
 
   return (

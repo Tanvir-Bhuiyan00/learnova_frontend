@@ -78,3 +78,32 @@ export async function getUserInfo() {
     return null;
   }
 }
+
+export async function changePassword(payload: {
+  currentPassword: string;
+  newPassword: string;
+}) {
+  try {
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("accessToken")?.value;
+
+    if (!accessToken) {
+      return { success: false, message: "Not authenticated" };
+    }
+
+    const res = await fetch(`${BASE_API_URL}/auth/change-password`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Cookie: `accessToken=${accessToken}`,
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error changing password:", error);
+    return { success: false, message: "Failed to change password" };
+  }
+}
