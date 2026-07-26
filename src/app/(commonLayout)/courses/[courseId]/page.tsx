@@ -1,4 +1,12 @@
-export default async function CourseDetailPage({ params }: { params: Promise<{ courseId: string }> }) {
-  const { courseId } = await params
-  return <div>Course Detail: {courseId}</div>
+import CourseDetail from "@/components/modules/Courses/CourseDetail";
+
+interface CourseDetailParams {
+  params: Promise<{ courseId: string }>;
 }
+
+const CourseDetailPage = async ({ params }: CourseDetailParams) => {
+  const { courseId } = await params;
+  return <CourseDetail courseId={courseId} />;
+};
+
+export default CourseDetailPage;

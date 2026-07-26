@@ -1,3 +1,7 @@
-export default function CoursesPage() {
-  return <div>Courses Page</div>
-}
+import CoursesList from "@/components/modules/Courses/CoursesList";
+
+const CoursesPage = () => {
+  return <CoursesList />;
+};
+
+export default CoursesPage;

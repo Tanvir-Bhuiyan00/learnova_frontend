@@ -1,7 +1,7 @@
-import React from "react";
+import HomeHero from "@/components/modules/HomeHero";
 
-const CommonHomePage = () => {
-  return <div>Hello World</div>;
+const HomePage = () => {
+  return <HomeHero />;
 };
 
-export default CommonHomePage;
+export default HomePage;

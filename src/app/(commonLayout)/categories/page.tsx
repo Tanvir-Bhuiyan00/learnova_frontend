@@ -1,3 +1,7 @@
-export default function CategoriesPage() {
-  return <div>Categories Page</div>
-}
+import CategoriesList from "@/components/modules/Categories/CategoriesList";
+
+const CategoriesPage = () => {
+  return <CategoriesList />;
+};
+
+export default CategoriesPage;
