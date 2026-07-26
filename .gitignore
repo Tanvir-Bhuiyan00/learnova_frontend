@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+src/__tests__/
+vitest.config.ts
 
 # next.js
 /.next/
