@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Menu, Search, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -56,6 +57,7 @@ const PublicHeader = () => {
         </form>
 
         <div className="hidden md:flex items-center gap-3">
+          <ThemeToggle />
           <Link href="/login">
             <Button variant="ghost" size="sm">Log In</Button>
           </Link>
@@ -91,7 +93,8 @@ const PublicHeader = () => {
                 {link.label}
               </Link>
             ))}
-            <div className="flex gap-2 pt-2 border-t">
+            <div className="flex gap-2 pt-2 border-t items-center">
+              <ThemeToggle />
               <Link href="/login" className="flex-1">
                 <Button variant="outline" className="w-full" size="sm">Log In</Button>
               </Link>
