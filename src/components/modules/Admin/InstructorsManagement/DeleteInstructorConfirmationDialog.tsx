@@ -70,7 +70,7 @@ const DeleteInstructorConfirmationDialog = ({
           <AlertDialogCancel disabled={isPending}>Cancel</AlertDialogCancel>
           <AlertDialogAction
             variant="destructive"
-            onClick={(event) => {
+            onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
               event.preventDefault();
               void handleConfirmDelete();
             }}
