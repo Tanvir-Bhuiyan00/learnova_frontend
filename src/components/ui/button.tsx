@@ -42,7 +42,9 @@ const buttonVariants = cva(
   }
 )
 
-type ButtonProps = ButtonPrimitive.Props &
+type BaseButtonProps = React.ComponentPropsWithoutRef<"button">
+
+type ButtonProps = (ButtonPrimitive.Props | BaseButtonProps) &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
   }
@@ -59,7 +61,7 @@ function Button({
       <Slot
         data-slot="button"
         className={cn(buttonVariants({ variant, size, className }))}
-        {...props}
+        {...(props as React.ComponentPropsWithoutRef<"button">)}
       />
     )
   }
@@ -68,7 +70,7 @@ function Button({
     <ButtonPrimitive
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
+      {...(props as ButtonPrimitive.Props)}
     />
   )
 }
