@@ -15,7 +15,7 @@ const MyProfilePage = () => {
     queryFn: () => getUserInfo(),
   });
 
-  const user: UserInfo | null = data?.data ?? null;
+  const user: UserInfo | null = data ?? null;
 
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-6">
