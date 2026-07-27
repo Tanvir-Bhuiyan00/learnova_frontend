@@ -66,15 +66,15 @@ const MOCK_NOTIFICATIONS: Notification[] = [
 const getNotificationIcon = (type: Notification["type"]) => {
   switch (type) {
     case "enrollment":
-      return <BookOpen className="h-4 w-4 text-blue-600" />;
+      return <BookOpen className="h-4 w-4 text-blue-600 dark:text-blue-400" />;
     case "review":
-      return <MessageSquare className="h-4 w-4 text-amber-600" />;
+      return <MessageSquare className="h-4 w-4 text-amber-600 dark:text-amber-400" />;
     case "system":
-      return <CheckCircle className="h-4 w-4 text-purple-600" />;
+      return <CheckCircle className="h-4 w-4 text-purple-600 dark:text-purple-400" />;
     case "user":
-      return <UserPlus className="h-4 w-4 text-green-600" />;
+      return <UserPlus className="h-4 w-4 text-green-600 dark:text-green-400" />;
     default:
-      return <Bell className="h-4 w-4 text-gray-600" />;
+      return <Bell className="h-4 w-4 text-muted-foreground" />;
   }
 };
 
@@ -85,16 +85,23 @@ const NotificationDropdown = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant={"outline"} size={"icon"} className="relative">
+        <Button
+          variant={"outline"}
+          size={"icon"}
+          className="relative"
+          aria-label={`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ''}`}
+        >
           <Bell className="h-5 w-5" />
-          <Badge
-            className="absolute -top-1 -right-1 h-5 w-5 rounded full p-0 flex items-center justify-center"
-            variant={"destructive"}
-          >
-            <span className="text-[10px">
-              {unreadCount > 9 ? "9+" : unreadCount}
-            </span>
-          </Badge>
+          {unreadCount > 0 && (
+            <Badge
+              className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center"
+              variant={"destructive"}
+            >
+              <span className="text-[10px]">
+                {unreadCount > 9 ? "9+" : unreadCount}
+              </span>
+            </Badge>
+          )}
         </Button>
       </DropdownMenuTrigger>
 
@@ -127,7 +134,7 @@ const NotificationDropdown = () => {
                       {notification.title}
                     </p>
                     {!notification.read && (
-                      <div className="h-2 w-2 rounded-full bg-blue-600" />
+                      <div className="h-2 w-2 rounded-full bg-blue-600 dark:bg-blue-400" />
                     )}
                   </div>
 

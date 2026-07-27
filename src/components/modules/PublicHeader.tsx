@@ -71,6 +71,8 @@ const PublicHeader = () => {
           size="icon"
           className="md:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileOpen}
         >
           {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
         </Button>

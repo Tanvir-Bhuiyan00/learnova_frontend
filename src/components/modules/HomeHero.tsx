@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { getCourses } from "@/services/course.services";
 import { ICourse } from "@/types/course.types";
 import { useQuery } from "@tanstack/react-query";
-import { BookOpen, Star, User } from "lucide-react";
 import Link from "next/link";
+import CourseCard from "@/components/shared/CourseCard";
+import PageContainer from "@/components/shared/PageContainer";
 
 const HomeHero = () => {
   const { data } = useQuery({
@@ -43,47 +44,14 @@ const HomeHero = () => {
       </section>
 
       {featured.length > 0 && (
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="mb-8 text-2xl font-bold">Featured Courses</h2>
-            <div className="grid gap-6 md:grid-cols-3">
-              {featured.map((course) => (
-                <Link
-                  key={course.id}
-                  href={`/courses/${course.id}`}
-                  className="group rounded-lg border p-6 shadow-sm transition-shadow hover:shadow-md"
-                >
-                  <div className="mb-3 flex h-36 items-center justify-center overflow-hidden rounded-md bg-muted">
-                    {course.thumbnail ? (
-                      <img src={course.thumbnail} alt={course.title} className="size-full object-cover" />
-                    ) : (
-                      <BookOpen className="size-12 text-muted-foreground" />
-                    )}
-                  </div>
-                  <h3 className="mb-1 font-semibold group-hover:text-primary transition-colors line-clamp-2">
-                    {course.title}
-                  </h3>
-                  <p className="mb-3 text-sm text-muted-foreground line-clamp-2">
-                    {course.description || ""}
-                  </p>
-                  <div className="flex items-center gap-3 text-sm text-muted-foreground">
-                    <span className="flex items-center gap-1">
-                      <User className="size-3.5" />
-                      {course.totalStudents}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Star className="size-3.5 fill-yellow-400 text-yellow-400" />
-                      {course.averageRating.toFixed(1)}
-                    </span>
-                    <span className="ml-auto font-semibold text-foreground">
-                      ${course.price.toFixed(2)}
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
+        <PageContainer spacing="lg">
+          <h2 className="mb-8 text-2xl font-bold">Featured Courses</h2>
+          <div className="grid gap-6 md:grid-cols-3">
+            {featured.map((course) => (
+              <CourseCard key={course.id} course={course} />
+            ))}
           </div>
-        </section>
+        </PageContainer>
       )}
 
       <section className="border-t bg-muted/30 py-16">

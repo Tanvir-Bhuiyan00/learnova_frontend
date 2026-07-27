@@ -116,6 +116,7 @@ const RegisterForm = () => {
                     onClick={() => setShowPassword((value) => !value)}
                     variant="ghost"
                     size="icon"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                   >
                     {showPassword ? (
                       <EyeOff className="size-4" aria-hidden="true" />
@@ -151,10 +152,10 @@ const RegisterForm = () => {
 
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-300"></div>
+            <div className="w-full border-t border-border"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-gray-500">
+            <span className="px-2 bg-background text-muted-foreground">
               Or continue with
             </span>
           </div>

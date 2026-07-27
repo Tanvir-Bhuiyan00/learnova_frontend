@@ -50,7 +50,6 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
           return;
         }
       } catch (error: any) {
-        console.log(`Login failed: ${error.message}`);
         setServerError(`Login failed: ${error.message}`);
       }
     },
@@ -101,7 +100,6 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
                 type={showPassword ? "text" : "password"}
                 // type="text"
                 placeholder="Enter your password"
-                aria-label={showPassword ? "Hide password" : "Show password"}
                 className="cursor-pointer"
                 append={
                   <Button
@@ -109,6 +107,7 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
                     onClick={() => setShowPassword((value) => !value)}
                     variant="ghost"
                     size="icon"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                   >
                     {showPassword ? (
                       <EyeOff className="size-4" aria-hidden="true" />
@@ -153,10 +152,10 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
 
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-300"></div>
+            <div className="w-full border-t border-border"></div>
           </div>
           <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-white text-gray-500">
+            <span className="px-2 bg-background text-muted-foreground">
               Or continue with
             </span>
           </div>
@@ -167,8 +166,8 @@ const LoginForm = ({ redirectPath }: LoginFormProps) => {
           className="w-full"
           onClick={() => {
             const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-            //TODO redirect path after login in frontend
-            window.location.href = `${baseUrl}/auth/login/google`;
+            const redirectPath = typeof window !== 'undefined' ? window.location.pathname : '/dashboard';
+            window.location.href = `${baseUrl}/auth/login/google?redirect=${encodeURIComponent(redirectPath)}`;
           }}
         >
           <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
